@@ -1,8 +1,15 @@
+import Actions from "./components/Actions";
+import Header from "./components/Header";
+import Logo from "./components/Logo";
+
 function App() {
   return (
-    <>
-      <p>Hello World</p>
-    </>
+    <div>
+      <Header>
+        <Logo />
+        <Actions />
+      </Header>
+    </div>
   );
 }
 
