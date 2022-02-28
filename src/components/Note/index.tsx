@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./styles.scss";
 
 export default function Note() {
+  const [hightlight, setHightlight] = useState(false);
+
   return (
-    <div className="note">
+    <div
+      className={`note ${hightlight && "hightlight"}`}
+      onClick={() => setHightlight(!hightlight)}
+    >
       <h2 className="title">Titulo exemplo</h2>
       <hr />
       <p className="note-description">

@@ -9,6 +9,10 @@
 
   background: var(--note-background);
 
+  &.hightlight {
+    border: 1px solid var(--dark-gray);
+  }
+
   hr {
     align-self: center;
     width: 80%;
