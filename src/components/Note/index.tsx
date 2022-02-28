@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useHightlight } from "../../context/HightlightContext";
 
 import "./styles.scss";
 
 export default function Note() {
-  const [hightlight, setHightlight] = useState(false);
+  const { hightlight, setHightlight } = useHightlight();
 
   return (
     <div
