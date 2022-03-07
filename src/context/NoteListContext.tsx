@@ -5,7 +5,7 @@ interface NoteListProviderProps {
 }
 
 interface NoteList {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
 }
