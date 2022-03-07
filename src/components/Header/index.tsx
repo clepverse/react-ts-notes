@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import "./styles.scss";
 
 interface ChildrenProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function Header({ children }: ChildrenProps) {

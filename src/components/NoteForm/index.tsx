@@ -1,14 +1,13 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaBan, FaCheck } from "react-icons/fa";
+import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
 
 import "./styles.scss";
 
 export default function NoteForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
   const { noteList, setNoteList } = useNoteList();
+  const { title, setTitle, description, setDescription } = useNoteForm();
 
   const titleHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);

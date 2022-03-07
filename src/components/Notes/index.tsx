@@ -8,7 +8,7 @@ import "./styles.scss";
 export default function Notes() {
   const { highlight, setHighlight } = useHighlight();
 
-  const { noteList, setNoteList } = useNoteList();
+  const { noteList } = useNoteList();
 
   return (
     <section className="notes">

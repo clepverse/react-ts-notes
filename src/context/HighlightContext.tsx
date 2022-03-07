@@ -1,7 +1,7 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, ReactNode } from "react";
 
 interface HighlightContextProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const initialValue = {

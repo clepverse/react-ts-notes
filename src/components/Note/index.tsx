@@ -1,4 +1,5 @@
 import React from "react";
+import { useNoteForm } from "../../context/NoteFormContext";
 
 import "./styles.scss";
 
@@ -20,10 +21,16 @@ export default function Note({
   highlight,
   setHighlight,
 }: NoteListProps & HighlightProps) {
+  const { visibleForm, setVisibleForm } = useNoteForm();
   return (
     <div
       className={`note ${highlight && "hightlight"}`}
-      onClick={() => setHighlight(!highlight)}
+      onClick={() => {
+        if (highlight) {
+          setVisibleForm(true);
+        }
+        setHighlight(!highlight);
+      }}
     >
       <h2 className="title">{title}</h2>
       <hr />
