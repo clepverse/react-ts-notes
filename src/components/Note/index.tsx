@@ -9,7 +9,7 @@ interface HighlightProps {
 }
 
 interface NoteListProps {
-  id: number | string;
+  id: string;
   title: string;
   description: string;
 }
@@ -22,14 +22,19 @@ export default function Note({
   setHighlight,
 }: NoteListProps & HighlightProps) {
   const { visibleForm, setVisibleForm } = useNoteForm();
+
   return (
     <div
-      className={`note ${highlight && "hightlight"}`}
+      id={id}
+      className={`note ${highlight === eval(id) && "highlight"}`}
       onClick={() => {
-        if (highlight) {
+        if (highlight === eval(id)) {
+          setHighlight(false);
+          setVisibleForm(false);
+        } else {
+          setHighlight(eval(id));
           setVisibleForm(true);
         }
-        setHighlight(!highlight);
       }}
     >
       <h2 className="title">{title}</h2>

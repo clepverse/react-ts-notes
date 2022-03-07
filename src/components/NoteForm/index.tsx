@@ -7,7 +7,14 @@ import "./styles.scss";
 
 export default function NoteForm() {
   const { noteList, setNoteList } = useNoteList();
-  const { title, setTitle, description, setDescription } = useNoteForm();
+  const {
+    visibleForm,
+    setVisibleForm,
+    title,
+    setTitle,
+    description,
+    setDescription,
+  } = useNoteForm();
 
   const titleHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
@@ -21,14 +28,24 @@ export default function NoteForm() {
 
   const submitHandler = (event: FormEvent): void => {
     event.preventDefault();
-    setNoteList([
-      ...noteList,
-      {
-        id: String(Math.floor(Math.random() * 1000)),
-        title,
-        description,
-      },
-    ]);
+    if (title && description !== "") {
+      setNoteList([
+        ...noteList,
+        {
+          id: String(Math.floor(Math.random() * 1000)),
+          title,
+          description,
+        },
+      ]);
+      setVisibleForm(false);
+    } else {
+      console.log(Error);
+    }
+  };
+
+  const cancelHandler = (event: FormEvent): void => {
+    event.preventDefault();
+    setVisibleForm(false);
   };
 
   return (
@@ -54,11 +71,11 @@ export default function NoteForm() {
         />
       </div>
       <div className="buttons">
-        <button type="button" className="cancel">
-          <FaBan className="icon" />
-        </button>
         <button type="submit" onClick={submitHandler} className="confirm">
           <FaCheck className="icon" />
+        </button>
+        <button type="button" onClick={cancelHandler} className="cancel">
+          <FaBan className="icon" />
         </button>
       </div>
     </form>
