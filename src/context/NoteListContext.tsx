@@ -1,31 +1,26 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, ReactNode } from "react";
 
-interface NoteListContextProps {
-  children: React.ReactNode;
+interface NoteListProviderProps {
+  children: ReactNode;
 }
 
-const valueInitial = {
-  noteList: [],
-  setNoteList: () => {},
-};
-
-interface NoteListContextType {
-  noteList: unknown[];
-  setNoteList: (newNoteList: []) => void;
+interface NoteList {
+  id: number;
+  title: string;
+  description: string;
+}
+interface NoteListType {
+  noteList: NoteList[];
+  setNoteList: (newState: NoteList[]) => void;
 }
 
-const NoteListContext = createContext<NoteListContextType>(valueInitial);
+const NoteListContext = createContext<NoteListType>({} as NoteListType);
 
-export default function NoteListProvider({ children }: NoteListContextProps) {
-  const [noteList, setNoteList] = useState(valueInitial.noteList);
+export default function NoteListProvider({ children }: NoteListProviderProps) {
+  const [noteList, setNoteList] = useState<NoteList[]>([]);
 
   return (
-    <NoteListContext.Provider
-      value={{
-        noteList,
-        setNoteList,
-      }}
-    >
+    <NoteListContext.Provider value={{ noteList, setNoteList }}>
       {children}
     </NoteListContext.Provider>
   );
