@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaBan, FaCheck } from "react-icons/fa";
+import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
 
@@ -7,6 +8,7 @@ import "./styles.scss";
 
 export default function NoteForm() {
   const { noteList, setNoteList } = useNoteList();
+  const { highlight, setHighlight } = useHighlight();
   const {
     visibleForm,
     setVisibleForm,
@@ -28,18 +30,29 @@ export default function NoteForm() {
 
   const submitHandler = (event: FormEvent): void => {
     event.preventDefault();
-    if (title && description !== "") {
-      setNoteList([
-        ...noteList,
-        {
-          id: String(Math.floor(Math.random() * 1000)),
-          title,
-          description,
-        },
-      ]);
-      setVisibleForm(false);
+    if (highlight) {
+      noteList.map((note) => {
+        if (eval(note.id) === highlight) {
+          note.title = title;
+          note.description = description;
+        }
+      });
+
+      setNoteList([...noteList]);
     } else {
-      console.log(Error);
+      if (title && description !== "") {
+        setNoteList([
+          ...noteList,
+          {
+            id: String(Math.floor(Math.random() * 1000)),
+            title,
+            description,
+          },
+        ]);
+        setVisibleForm(false);
+      } else {
+        console.log(Error);
+      }
     }
   };
 
