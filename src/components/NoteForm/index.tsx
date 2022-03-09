@@ -42,11 +42,8 @@ export default function NoteForm() {
           note.title = title;
           note.description = description;
           toast.success("Nota editada com sucesso!");
-          setVisibleForm(false);
-          setHighlight(false);
         }
       });
-
       setNoteList([...noteList]);
     } else {
       if (title && description) {
@@ -58,10 +55,8 @@ export default function NoteForm() {
             description,
           },
         ]);
-
-        setHighlight(false);
-        setVisibleForm(false);
         toast.success("Nota criada com sucesso!");
+        setHighlight(false);
         setTitle("");
         setDescription("");
       } else {
@@ -83,9 +78,7 @@ export default function NoteForm() {
 
       setNoteList([...noteList]);
       toast.success("Nota removida com sucesso!");
-      setVisibleForm(false);
       setHighlight(false);
-      localStorage.removeItem("notes");
     }
   };
 
