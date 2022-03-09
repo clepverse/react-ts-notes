@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect } from "react";
-import { FaBan, FaCheck } from "react-icons/fa";
+import { FaBan, FaCheck, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
@@ -8,7 +9,7 @@ import "./styles.scss";
 
 export default function NoteForm() {
   const { noteList, setNoteList } = useNoteList();
-  const { highlight } = useHighlight();
+  const { highlight, setHighlight } = useHighlight();
   const { title, setTitle, description, setDescription, setVisibleForm } =
     useNoteForm();
 
@@ -33,6 +34,7 @@ export default function NoteForm() {
         if (eval(note.id) === highlight) {
           note.title = title;
           note.description = description;
+          toast.success("Nota editada com sucesso!");
         }
       });
 
@@ -47,14 +49,40 @@ export default function NoteForm() {
             description,
           },
         ]);
+
+        setHighlight(false);
+        toast.success("Nota criada com sucesso!");
+        setTitle("");
+        setDescription("");
       } else {
-        alert("Preencha todos os campos!");
+        toast.error("Preencha todos os campos!");
       }
+    }
+  };
+
+  const deleteHandler = (): void => {
+    if (highlight) {
+      setTitle("");
+      setDescription("");
+      setHighlight(false);
+
+      const highlightedNote = noteList.findIndex(
+        (note) => eval(note.id) === highlight
+      );
+      noteList.splice(highlightedNote, 1);
+
+      setNoteList([...noteList]);
+      toast.success("Nota removida com sucesso!");
+      setVisibleForm(false);
+      setHighlight(false);
+      localStorage.removeItem("notes");
     }
   };
 
   const cancelHandler = (event: FormEvent): void => {
     event.preventDefault();
+
+    setHighlight(false);
     setVisibleForm(false);
   };
 
@@ -86,7 +114,14 @@ export default function NoteForm() {
       </div>
       <div className="buttons">
         <button type="submit" onClick={submitHandler} className="confirm">
-          <FaCheck className="icon" />
+          {highlight ? (
+            <FaPencilAlt className="icon" />
+          ) : (
+            <FaCheck className="icon" />
+          )}
+        </button>
+        <button type="button" onClick={deleteHandler} className="cancel">
+          {highlight && <FaTrash className="icon" />}
         </button>
         <button type="button" onClick={cancelHandler} className="cancel">
           <FaBan className="icon" />

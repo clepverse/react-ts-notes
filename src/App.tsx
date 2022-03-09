@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import Actions from "./components/Actions";
 import Header from "./components/Header";
 import Logo from "./components/Logo";
@@ -6,6 +7,8 @@ import NotesArea from "./components/NotesArea";
 import HighlightProvider from "./context/HighlightContext";
 import NoteFormProvider from "./context/NoteFormContext";
 import NoteListProvider from "./context/NoteListContext";
+
+import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
   return (
@@ -19,6 +22,7 @@ function App() {
           <NotesArea>
             <Notes />
           </NotesArea>
+          <ToastContainer />
         </HighlightProvider>
       </NoteListProvider>
     </NoteFormProvider>

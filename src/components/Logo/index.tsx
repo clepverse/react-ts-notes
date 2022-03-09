@@ -4,7 +4,7 @@ import "./styles.scss";
 export default function Logo() {
   return (
     <h1 className="logo">
-      <span>LAST </span>
+      <span>CLEP </span>
       NOTES
     </h1>
   );
