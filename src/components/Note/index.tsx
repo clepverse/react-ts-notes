@@ -21,7 +21,7 @@ export default function Note({
   highlight,
   setHighlight,
 }: NoteListProps & HighlightProps) {
-  const { visibleForm, setVisibleForm } = useNoteForm();
+  const { setVisibleForm } = useNoteForm();
 
   return (
     <div

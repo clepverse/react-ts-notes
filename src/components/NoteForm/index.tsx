@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import { FaBan, FaCheck } from "react-icons/fa";
 import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
@@ -8,15 +8,13 @@ import "./styles.scss";
 
 export default function NoteForm() {
   const { noteList, setNoteList } = useNoteList();
-  const { highlight, setHighlight } = useHighlight();
-  const {
-    visibleForm,
-    setVisibleForm,
-    title,
-    setTitle,
-    description,
-    setDescription,
-  } = useNoteForm();
+  const { highlight } = useHighlight();
+  const { title, setTitle, description, setDescription, setVisibleForm } =
+    useNoteForm();
+
+  useEffect(() => {
+    saveLocalNotes();
+  }, [noteList]);
 
   const titleHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
@@ -40,7 +38,7 @@ export default function NoteForm() {
 
       setNoteList([...noteList]);
     } else {
-      if (title && description !== "") {
+      if (title && description) {
         setNoteList([
           ...noteList,
           {
@@ -49,9 +47,8 @@ export default function NoteForm() {
             description,
           },
         ]);
-        setVisibleForm(false);
       } else {
-        console.log(Error);
+        alert("Preencha todos os campos!");
       }
     }
   };
@@ -59,6 +56,10 @@ export default function NoteForm() {
   const cancelHandler = (event: FormEvent): void => {
     event.preventDefault();
     setVisibleForm(false);
+  };
+
+  const saveLocalNotes = (): void => {
+    localStorage.setItem("notes", JSON.stringify(noteList));
   };
 
   return (
