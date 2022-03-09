@@ -43,7 +43,7 @@ export default function Note({
       {highlight === eval(id) ? (
         <span className="select-edit">Selecionado</span>
       ) : (
-        <span className="select-edit">Selecione para Editar</span>
+        <span className="select-edit">Clique para Editar</span>
       )}
     </div>
   );
