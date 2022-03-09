@@ -4,14 +4,21 @@ import { toast } from "react-toastify";
 import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
+import Modal from "react-modal";
 
 import "./styles.scss";
 
 export default function NoteForm() {
   const { noteList, setNoteList } = useNoteList();
   const { highlight, setHighlight } = useHighlight();
-  const { title, setTitle, description, setDescription, setVisibleForm } =
-    useNoteForm();
+  const {
+    title,
+    setTitle,
+    description,
+    visibleForm,
+    setDescription,
+    setVisibleForm,
+  } = useNoteForm();
 
   useEffect(() => {
     saveLocalNotes();
@@ -35,6 +42,8 @@ export default function NoteForm() {
           note.title = title;
           note.description = description;
           toast.success("Nota editada com sucesso!");
+          setVisibleForm(false);
+          setHighlight(false);
         }
       });
 
@@ -51,6 +60,7 @@ export default function NoteForm() {
         ]);
 
         setHighlight(false);
+        setVisibleForm(false);
         toast.success("Nota criada com sucesso!");
         setTitle("");
         setDescription("");
@@ -91,42 +101,51 @@ export default function NoteForm() {
   };
 
   return (
-    <form className="note-menu">
-      <div>
-        <label htmlFor="title">Titulo</label>
-        <input
-          id="title"
-          value={title}
-          onChange={titleHandler}
-          type="text"
-          placeholder="Informe um titulo"
-        />
-      </div>
-      <div>
-        <label htmlFor="note">Nota</label>
-        <textarea
-          id="note"
-          value={description}
-          onChange={descriptionHandler}
-          rows={3}
-          placeholder="Escreva a sua nota"
-        />
-      </div>
-      <div className="buttons">
-        <button type="submit" onClick={submitHandler} className="confirm">
-          {highlight ? (
-            <FaPencilAlt className="icon" />
-          ) : (
-            <FaCheck className="icon" />
-          )}
-        </button>
-        <button type="button" onClick={deleteHandler} className="cancel">
-          {highlight && <FaTrash className="icon" />}
-        </button>
-        <button type="button" onClick={cancelHandler} className="cancel">
-          <FaBan className="icon" />
-        </button>
-      </div>
-    </form>
+    <Modal
+      isOpen={visibleForm}
+      onRequestClose={cancelHandler}
+      overlayClassName="react-modal-overlay"
+      className="react-modal-content"
+    >
+      <form className="note-menu">
+        <div>
+          <div className="title-button">
+            <label htmlFor="title">Titulo</label>
+            <button type="button" onClick={cancelHandler} className="cancel">
+              <FaBan className="icon" />
+            </button>
+          </div>
+          <input
+            id="title"
+            value={title}
+            onChange={titleHandler}
+            type="text"
+            placeholder="Informe um titulo"
+          />
+        </div>
+        <div>
+          <label htmlFor="note">Nota</label>
+          <textarea
+            id="note"
+            value={description}
+            onChange={descriptionHandler}
+            rows={3}
+            placeholder="Escreva a sua nota"
+          />
+        </div>
+        <div className="buttons">
+          <button type="submit" onClick={submitHandler} className="confirm">
+            {highlight ? (
+              <FaPencilAlt className="icon" />
+            ) : (
+              <FaCheck className="icon" />
+            )}
+          </button>
+          <button type="button" onClick={deleteHandler} className="cancel">
+            {highlight && <FaTrash className="icon" />}
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }

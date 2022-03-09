@@ -1,15 +1,38 @@
 .note-menu {
   display: flex;
   flex-direction: column;
-  width: 25em;
-  min-width: 25em;
-  min-height: 95vh;
   padding: 1.5em;
   background: var(--dark-gray);
 
   div:not(.buttons) {
     display: flex;
     flex-direction: column;
+
+    .title-button {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      > button {
+        cursor: pointer;
+        padding: 0.15em;
+        background: transparent;
+        border: none;
+
+        .icon {
+          width: 1.5em;
+          height: 1.5em;
+
+          color: #fff;
+
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            color: #d8d3d3;
+          }
+        }
+      }
+    }
 
     label {
       font-weight: 300;

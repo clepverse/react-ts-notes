@@ -7,5 +7,5 @@ interface ChildrenProps {
 }
 
 export default function Header({ children }: ChildrenProps) {
-  return <header>{children}</header>;
+  return <header className="header_content">{children}</header>;
 }
