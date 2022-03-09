@@ -40,6 +40,11 @@ export default function Note({
       <h2 className="title">{title}</h2>
       <hr />
       <p className="note-description">{description}</p>
+      {highlight === eval(id) ? (
+        <span className="select-edit">Selecionado</span>
+      ) : (
+        <span className="select-edit">Selecione para Editar</span>
+      )}
     </div>
   );
 }

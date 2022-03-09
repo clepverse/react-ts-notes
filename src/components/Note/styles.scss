@@ -9,6 +9,8 @@
 
   background: var(--note-background);
 
+  cursor: pointer;
+
   &.highlight {
     border: 1px solid var(--dark-gray);
   }
@@ -60,5 +62,9 @@
     &hover::-webkit-scrollbar-thumb {
       background: #888;
     }
+  }
+
+  .select-edit {
+    font-size: 0.7em;
   }
 }
