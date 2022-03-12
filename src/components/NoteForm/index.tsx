@@ -1,11 +1,10 @@
 import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import { FaBan, FaCheck, FaPencilAlt, FaTrash } from "react-icons/fa";
+import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
-import Modal from "react-modal";
-
 import "./styles.scss";
 
 export default function NoteForm() {

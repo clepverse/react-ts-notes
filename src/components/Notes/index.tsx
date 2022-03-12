@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHighlight } from "../../context/HighlightContext";
 import { useNoteForm } from "../../context/NoteFormContext";
 import { useNoteList } from "../../context/NoteListContext";
 import Note from "../Note";
-
 import "./styles.scss";
 
 export default function Notes() {
-  const { setTitle, setDescription } = useNoteForm();
+  const { setTitle, setDescription, setVisibleForm } = useNoteForm();
   const { highlight, setHighlight } = useHighlight();
   const { noteList, setNoteList } = useNoteList();
 
   useEffect(() => {
     getLocalNotes();
+    if (localStorage.getItem("notes") === JSON.stringify([])) {
+      setVisibleForm(true);
+    }
   }, []);
 
   useEffect(() => {
